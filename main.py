@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import date, datetime
+import re
 import pickle
 
 from settings import filename, PAG
@@ -63,14 +64,38 @@ class Phone(Field):
     def value(self, value):
         if len(value) != 10 or not value.isdigit():
             raise ValueError('Incorrect number format. Please enter a 10-digit number.')
-        self.__value = value  
+        self.__value = value
+
+
+class Email(Field):
+    def __init__(self, value):
+        super().__init__(value)
+        self.__value = None
+        self.value = value
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, value):
+        pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        if not re.match(pattern, value):
+            raise ValueError('Incorrect email format. Please enter email like user@example.com.')
+        self.__value = value
+
+
+class Address(Field):
+    pass
 
 
 class Record:
     def __init__(self, name):
-       self.name = Name(name)
-       self.phones = []
-       self.birthday = ""
+        self.name = Name(name)
+        self.phones = []
+        self.birthday = ""
+        self.email = ""
+        self.address = ""
 
     def __str__(self):
         phones_str = '; '.join(p.value for p in self.phones)
@@ -135,6 +160,18 @@ class Record:
             birthday_date = birthday_date.replace(year=today_date.year + 1)
         delta = birthday_date - today_date
         return delta.days
+
+    def add_email(self, email):
+        if not self.email:
+            self.email = Email(email)
+        else:
+            print(f'Record {self.name} yet have field birthday - {self.email.value}')
+
+    def add_address(self, address):
+        if not self.address:
+            self.address = Address(address)
+        else:
+            print(f'Record {self.name} yet have field birthday - {self.address.value}')
 
 
 class AddressBook(UserDict):

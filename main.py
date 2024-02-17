@@ -106,19 +106,22 @@ class Record:
     def __str__(self):
         phones_str = '; '.join(p.value for p in self.phones)
         birthday_str = f", birthday: {self.birthday.value.strftime('%d/%m/%Y')}" if self.birthday else ""
-        return f"Contact name: {self.name.value}, phones: {phones_str}{birthday_str}"
+        return (f"Contact name: {self.name.value}, phones: {phones_str}{birthday_str}, email: {self.email},"
+                f"address: {self.address}.")
 
     def edit_name(self, edited_name):
         self.name = Name(edited_name)
-
+        print("Editing is successful!")
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
+        print("Adding is successful!")
 
     def remove_phone(self, phone):
         for i in self.phones:
             if phone == i.value:
                 self.phones.remove(i)
+                print("Removing is successful!")
                 return True
         raise ValueError('Incorrect number. Reinput, please')
 
@@ -134,6 +137,7 @@ class Record:
                 else:
                     new_phones.append(Phone(i.value))
             self.phones = new_phones
+            print("Editing is successful!")
             return True
         else: 
             raise ValueError('Incorrect number. Reinput, please')
@@ -147,16 +151,19 @@ class Record:
                 if phone == i.value:
                     return i
         else:
+            print(f"Phone number {phone} didn't find!")
             return None
 
     def add_birthday(self, birthday):
         if not self.birthday:
             self.birthday = Birthday(birthday)
+            print("Adding is successful!")
         else:
             print(f'Record {self.name} yet have field birthday - {self.birthday.value.strftime("%d/%m/%Y")}')
 
     def edit_birthday(self, new_birthday):
         self.birthday = Birthday(new_birthday)
+        print("Editing is successful!")
 
 
     def delete_birthday(self): #в завданні відсутній, але потрібний для консистентності
@@ -175,25 +182,38 @@ class Record:
     def add_email(self, email):
         if not self.email:
             self.email = Email(email)
+            print("Adding is successful!")
         else:
-            print(f'Record {self.name} yet have field birthday - {self.email.value}')
-
+            print(f'Record {self.name} yet have field email - {self.email.value}')
 
     def edit_email(self, new_email):
         self.email = Email(new_email)
+        print("Editing is successful!")
 
+    def remove_email(self):
+        if self.email:
+            del self.email
+            print('Removing is successful!')
+        else:
+            print(f"Record {self.name} don't have field email!")
 
     def add_address(self, address):
         if not self.address:
             self.address = Address(address)
+            print("Adding is successful!")
         else:
-            print(f'Record {self.name} yet have field birthday - {self.address.value}')
-
+            print(f'Record {self.name} yet have field address - {self.address.value}')
 
     def edit_address(self, new_address):
         self.address = Address(new_address)
+        print("Editing is successful!")
 
-
+    def remove_address(self):
+        if self.address:
+            del self.address
+            print('Removing is successful!')
+        else:
+            print(f"Record {self.name} don't have field address!")
 
 
 class AddressBook(UserDict):

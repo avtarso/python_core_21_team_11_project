@@ -10,13 +10,19 @@ wellcome_message = f"Please enter your command:  "
 hello_message = "How can I help you?"
 good_bye_message = "Good bye!"
 bad_command = "Incorrect command!"
+add = "Please write name, address, phone, email, date of birth"
+change = "Write the name of the contact you want to change"
+delete = "Write the name of contact you want to delete"
+find = "Write the name or phone number of the contact you want to find"
 help_string = """For working with me, please, input one of next command:
 "hello" - I print "How can I help you?"
 "show all" - I print all recorded phone numbers
 "find" - I find record by name or phone
 "good bye", "close" or "exit" - I stop working
-"help" - I print this text"""
-
+"help" - I print this text
+"add" - I add name, phone, email, date of birth, address
+"change" - I can change the data
+"delete" - I can delete contact"""
 
 class Field:
     def __init__(self, value):
@@ -102,6 +108,10 @@ class Record:
         birthday_str = f", birthday: {self.birthday.value.strftime('%d/%m/%Y')}" if self.birthday else ""
         return f"Contact name: {self.name.value}, phones: {phones_str}{birthday_str}"
 
+    def edit_name(self, edited_name):
+        self.name = Name(edited_name)
+
+
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
@@ -145,8 +155,9 @@ class Record:
         else:
             print(f'Record {self.name} yet have field birthday - {self.birthday.value.strftime("%d/%m/%Y")}')
 
-    def edit_birthday(self, new_birthday): #в завданні відсутній, але потрібний для консистентності
-        pass 
+    def edit_birthday(self, new_birthday):
+        self.birthday = Birthday(new_birthday)
+
 
     def delete_birthday(self): #в завданні відсутній, але потрібний для консистентності
         pass 
@@ -167,11 +178,22 @@ class Record:
         else:
             print(f'Record {self.name} yet have field birthday - {self.email.value}')
 
+
+    def edit_email(self, new_email):
+        self.email = Email(new_email)
+
+
     def add_address(self, address):
         if not self.address:
             self.address = Address(address)
         else:
             print(f'Record {self.name} yet have field birthday - {self.address.value}')
+
+
+    def edit_address(self, new_address):
+        self.address = Address(new_address)
+
+
 
 
 class AddressBook(UserDict):
@@ -194,6 +216,7 @@ class AddressBook(UserDict):
                     return True
         else:
             return None
+
 
     def iterator_simple(self):
         st_list, obj_len = [], len(self.data)
@@ -280,12 +303,63 @@ def main():
             else:
                 print(f"I can`t find any matches with '{find_string}'")
 
-        # elif user_command.startswith("add"):
-        #     print(new_phone(user_input))
+        elif user_command.startswith("add"):
+            name = input("Please enter the name ")
+            phone = input("Please enter the phone ")
+            email = input("Please enter the email ")
+            address = input("Please enter the address ")
+            birthday = input("Please enter the date of birth ")
+            new_record = Record(name)
+            new_record.add_phone(phone)
+            new_record.add_email(email)
+            new_record.add_address(address)
+            new_record.add_birthday(birthday)
+            book.add_record(new_record)
+            print('Contact added')
+        elif user_command.startswith("change"):
+            contact_name = input("Please enter the name of the contact you want to change ")
+            find_record = book.find(contact_name)
+            if find_record is None:
+                print("Contact name not found ")
+            else:
+                while True:
+                    print("Choose the field to change (or type 'done' to finish changing):")
+                    print("1. Name")
+                    print("2. Phone")
+                    print("3. Birthday")
+                    print("4. Email")
+                    print("5. Address")
+                    choice = input("Enter your choice (1-5): ")
+                    if choice == 'done':
+                        break
+                    elif choice == "1":
+                        new_name = input("Please enter new name ")
+                        find_record.edit_name(new_name)
+                        if new_name != contact_name:
+                            book.add_record(find_record)
+                            book.delete(contact_name)
+                    elif choice == "2":
+                        new_phone = input("Please enter new phone ")
+                        find_record.add_phone(new_phone)
+                    elif choice == "3":
+                        new_birthday = input("Please enter new birthday ")
+                        find_record.edit_birthday(new_birthday)
+                    elif choice == "4":
+                        new_email = input("Please enter new email ")
+                        find_record.edit_email(new_email)
+                    elif choice == "5":
+                        new_address = input("Please enter new address ")
+                        find_record.edit_address(new_address)
+                    else:
+                        print("Please type numbers 1-5 or done ")
 
-        # elif user_command.startswith("change"):
-        #     print(edit_phone(user_input))
-        
+        elif user_command.startswith("delete"):
+            contact_name = input("Please enter contact name you need to delete ")
+            book.delete(contact_name)
+
+
+
+
         elif user_command in ["good bye", "close", "exit"]:
             print(good_bye_message)
             break

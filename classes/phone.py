@@ -1,4 +1,8 @@
 from classes.field import Field
+from colorama import init, Fore
+
+init(autoreset=True)
+
 
 class Phone(Field):
     def __init__(self, value):
@@ -12,5 +16,5 @@ class Phone(Field):
     @value.setter
     def value(self, value):
         if len(value) != 10 or not value.isdigit():
-            raise ValueError('Incorrect number format. Please enter a 10-digit number.')
-        self.__value = value  
+            raise ValueError(Fore.RED + 'Incorrect number format. Please enter a 10-digit number.')
+        self.__value = value

@@ -2,10 +2,11 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 
+from classes.note import Note
 
 class Notes(UserDict):
 
-    uid = 0
+    uid = 1
 
     def __init__(self, *args):
 
@@ -136,6 +137,13 @@ class Notes(UserDict):
             proc_list = proc_list[::-1]
 
         return proc_list                
+
+    def is_note_exists(self, uid):
+
+        if self.data.get(uid, None):
+            return True
+
+        return False
 
     def save_to_file(self, filename):
         with open(filename, "wb") as file:

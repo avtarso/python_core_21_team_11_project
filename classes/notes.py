@@ -1,6 +1,7 @@
-from collections import UserDict
-from datetime import datetime
-import pickle
+# from collections import UserDict
+# from datetime import datetime
+# import pickle
+# повинно працювати без цього, бо вже імпортовано в main.py
 
 class Note:
 

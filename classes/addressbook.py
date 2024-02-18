@@ -30,8 +30,10 @@ class AddressBook(UserDict):
                 if i == name:
                     self.data.pop(name)
                     self.write_contacts_to_file(filename)
+                    print(f"Record '{name}' deleted successful!")
                     return True
         else:
+            print(f"Record '{name}' not found!")
             return None
 
     def iterator_simple(self):
@@ -99,10 +101,14 @@ class AddressBook(UserDict):
             book = AddressBook()
             today_date = date.today()
             chek_day  = today_date + timedelta(days=number_days)
-
-            for i, (name, record) in enumerate(self.data.items(), 1):
+            print(chek_day)
+            print(self.data.items())
+            for i, (name, record) in enumerate(self.data.items()):
+                print(record.birthday)
                 if record.birthday:
                     cheked_day = record.birthday.value.date()
+                    cheked_day = cheked_day.replace(year=today_date.year)
+                    print(cheked_day)
                     if cheked_day < today_date:
                         cheked_day = cheked_day.replace(year=today_date.year + 1)
                     if cheked_day < chek_day and cheked_day > today_date:

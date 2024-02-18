@@ -1,5 +1,8 @@
 from datetime import date, datetime
 from classes.field import Field
+from colorama import init, Fore
+init(autoreset=True)
+
 
 class Birthday(Field):
     def __init__(self, value):
@@ -15,7 +18,7 @@ class Birthday(Field):
         try:
             self.__value = datetime.strptime(value, "%d/%m/%Y")
         except ValueError:
-            print('Waiting format of date - DD/MM/YYYY. Reinput, please')
+            print(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please')
 
     def __str__(self):
         return self.value.strftime('%d/%m/%Y')

@@ -1,5 +1,7 @@
 from classes.field import Field
 import re
+from colorama import init, Fore
+init(autoreset=True)
 
 
 class Email(Field):
@@ -16,5 +18,5 @@ class Email(Field):
     def value(self, value):
         pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(pattern, value):
-            raise ValueError('Incorrect email format. Please enter email like user@example.com.')
+            raise ValueError(Fore.RED + 'Incorrect email format. Please enter email like user@example.com.')
         self.__value = value

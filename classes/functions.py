@@ -2,6 +2,7 @@ from classes.note import Note
 from classes.notes import Notes
 
 import os
+import sys
 
 # Функції для роботи з нотатками - початок
 def split_text(text: str) -> list:

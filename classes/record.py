@@ -4,6 +4,8 @@ from classes.field import Field
 from classes.name import Name
 from classes.birthday import Birthday
 from classes.phone import Phone
+from classes.email import Email
+from classes.address import Address
 
 
 class Record:
@@ -24,17 +26,17 @@ class Record:
 
     def edit_name(self, edited_name):
         self.name = Name(edited_name)
-        print("Editing is successful!")
+        print(f"Editing NAME to '{edited_name}' is successful!")
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
-        print("Adding is successful!")
+        print(f"Adding PHONE to '{phone}' is successful!")
 
     def remove_phone(self, phone):
         for i in self.phones:
             if phone == i.value:
                 self.phones.remove(i)
-                print("Removing is successful!")
+                print(f"Removing PHONE '{phone}' is successful!")
                 return True
         raise ValueError('Incorrect number. Reinput, please')
 
@@ -50,7 +52,7 @@ class Record:
                 else:
                     new_phones.append(Phone(i.value))
             self.phones = new_phones
-            print("Editing is successful!")
+            print(f"Editing PHONE to '{edited_phone}' is successful!")
             return True
         else: 
             raise ValueError('Incorrect number. Reinput, please')
@@ -64,19 +66,19 @@ class Record:
                 if phone == i.value:
                     return i
         else:
-            print(f"Phone number {phone} didn't find!")
+            print(f"Phone number '{phone}' didn't find!")
             return None
 
     def add_birthday(self, birthday):
         if not self.birthday:
             self.birthday = Birthday(birthday)
-            print("Adding is successful!")
+            print(f"Adding BIRTHDAY '{birthday}' is successful!")
         else:
-            print(f'Record {self.name} yet have field birthday - {self.birthday.value.strftime("%d/%m/%Y")}')
+            print(f"Record '{self.name}' yet have field birthday - '{self.birthday.value.strftime('%d/%m/%Y')}'")
 
     def edit_birthday(self, new_birthday):
         self.birthday = Birthday(new_birthday)
-        print("Editing is successful!")
+        print(f"Editing BIRTHDAY to '{new_birthday}' is successful!")
 
 
     def delete_birthday(self): #в завданні відсутній, але потрібний для консистентності
@@ -84,7 +86,7 @@ class Record:
 
     def days_to_birthday(self):
         if not self.birthday:
-            return f"Record {self.name} saved without birthday"
+            return f"Record '{self.name}' saved without birthday"
         today_date = date.today()
         birthday_date = date(today_date.year, self.birthday.value.month, self.birthday.value.day)
         if birthday_date < today_date:
@@ -95,35 +97,36 @@ class Record:
     def add_email(self, email):
         if not self.email:
             self.email = Email(email)
-            print("Adding is successful!")
+            print(f"Adding EMAIL '{email}' is successful!")
         else:
-            print(f'Record {self.name} yet have field email - {self.email.value}')
+            print(f"Record '{self.name}' yet have field email - '{self.email.value}'")
 
     def edit_email(self, new_email):
         self.email = Email(new_email)
-        print("Editing is successful!")
+        print(f"Editing EMAIL to '{new_email}' is successful!")
 
     def remove_email(self):
         if self.email:
-            del self.email
-            print('Removing is successful!')
+            #del self.email
+            self.email = Email("")
+            print(f"Removing EMAIL '{self.email}' is successful!")
         else:
-            print(f"Record {self.name} don't have field email!")
+            print(f"Record '{self.name}' don't have field email!")
 
     def add_address(self, address):
         if not self.address:
             self.address = Address(address)
-            print("Adding is successful!")
+            print(f"Adding ADDRESS '{address}' is successful!")
         else:
-            print(f'Record {self.name} yet have field address - {self.address.value}')
+            print(f"Record '{self.name}' yet have field address - '{self.address.value}'")
 
     def edit_address(self, new_address):
         self.address = Address(new_address)
-        print("Editing is successful!")
+        print(f"Editing ADDRESS to '{new_address}' is successful!")
 
     def remove_address(self):
         if self.address:
             del self.address
-            print('Removing is successful!')
+            print(f"Removing ADDRESS '{self.address}' is successful!")
         else:
-            print(f"Record {self.name} don't have field address!")
+            print(f"Record '{self.name}' don't have field address!")

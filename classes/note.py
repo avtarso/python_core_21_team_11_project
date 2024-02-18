@@ -1,8 +1,3 @@
-from collections import UserDict
-from datetime import datetime
-import pickle
-
-
 class Note:
 
     def __init__(self, text="", tags=[]):

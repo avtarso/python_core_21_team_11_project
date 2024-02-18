@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import date, datetime
+from simple_term_menu import TerminalMenu
 import re
 import pickle
 
@@ -11,6 +12,9 @@ from classes.email import Email
 from classes.address import Address
 from classes.record import Record
 from classes.addressbook import AddressBook
+from classes.note import Note
+from classes.notes import Notes
+
 
 from classes.settings import filename, PAG
 
@@ -38,20 +42,32 @@ def main():
     
     book = AddressBook()
     book = AddressBook.read_contacts_from_file(filename)
-    book.write_contacts_to_file("adressbook.pkl")
+    #book.write_contacts_to_file("adressbook.pkl")
+
+    main_options = ["About Bot Helper",
+               "Hello, User",
+               "Show all records",
+               "Find records",
+               "Add record",
+               "Change record",
+               "Delete record",
+               "Exit"]
+    terminal_menu = TerminalMenu(main_options)
 
     while True:
-        user_input = input(wellcome_message)
-        user_command = user_input.lower()
+
+        main_menu_entry_index = terminal_menu.show()
+
+        user_command = main_options[main_menu_entry_index]
  
-        if user_command == "help": 
+        if user_command == "About Bot Helper": 
             print(help_string)
-        elif user_command == "hello":
+        elif user_command == "Hello, User!":
             print(hello_message)
-        elif user_command == "show all":
+        elif user_command == "Show all records":
             book.iterator()
 
-        elif user_command.startswith("find"):
+        elif user_command.startswith("Find records"):
             find_string = input("Please input what you want find: ")
             find_result = AddressBook()
             find_result = book.find_record(find_string)
@@ -60,7 +76,7 @@ def main():
             else:
                 print(f"I can`t find any matches with '{find_string}'")
 
-        elif user_command.startswith("add"):
+        elif user_command.startswith("Add record"):
             name = input("Please enter the name ")
             phone = input("Please enter the phone ")
             email = input("Please enter the email ")
@@ -73,55 +89,57 @@ def main():
             new_record.add_birthday(birthday)
             book.add_record(new_record)
             print('Contact added')
-        elif user_command.startswith("change"):
+        elif user_command.startswith("Change record"):
             contact_name = input("Please enter the name of the contact you want to change ")
             find_record = book.find(contact_name)
             if find_record is None:
                 print("Contact name not found ")
             else:
+                edit_options = ["Edit Name",
+                            "Edit Phone",
+                            "Edit Birthday",
+                            "Edit Email",
+                            "Edit Address",
+                            "Exit"]
+                edit_terminal_menu = TerminalMenu(edit_options)
                 while True:
-                    print("Choose the field to change (or type 'done' to finish changing):")
-                    print("1. Name")
-                    print("2. Phone")
-                    print("3. Birthday")
-                    print("4. Email")
-                    print("5. Address")
-                    choice = input("Enter your choice (1-5): ")
-                    if choice == 'done':
+                    print()
+                    print("Choose the field to change (or 'Exit'' to finish changing):")
+                    edit_menu_entry_index = edit_terminal_menu.show()
+                    choice = edit_options[edit_menu_entry_index]
+                    if choice == 'Exit':
                         break
-                    elif choice == "1":
+                    elif choice == "Edit Name":
                         new_name = input("Please enter new name ")
                         find_record.edit_name(new_name)
                         if new_name != contact_name:
                             book.add_record(find_record)
                             book.delete(contact_name)
-                    elif choice == "2":
+                    elif choice == "Phone":
+                        print("Please enter new phone ")
                         new_phone = input("Please enter new phone ")
                         find_record.add_phone(new_phone)
-                    elif choice == "3":
+                    elif choice == "Birthday":
                         new_birthday = input("Please enter new birthday ")
                         find_record.edit_birthday(new_birthday)
-                    elif choice == "4":
+                    elif choice == "Email":
                         new_email = input("Please enter new email ")
                         find_record.edit_email(new_email)
-                    elif choice == "5":
+                    elif choice == "Address":
                         new_address = input("Please enter new address ")
                         find_record.edit_address(new_address)
-                    else:
-                        print("Please type numbers 1-5 or done ")
 
-        elif user_command.startswith("delete"):
+
+        elif user_command.startswith("Delete record"):
             contact_name = input("Please enter contact name you need to delete ")
             book.delete(contact_name)
 
 
 
 
-        elif user_command in ["good bye", "close", "exit"]:
+        elif user_command in ["Exit"]:
             print(good_bye_message)
             break
-
-        else: print(bad_command + "\n" + help_string)
 
 if __name__ == '__main__':
     main()

@@ -14,6 +14,7 @@ from classes.settings import filename, PAG
 class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
+        self.write_contacts_to_file(filename)
 
     def find(self, name):
         if name in self:
@@ -28,6 +29,7 @@ class AddressBook(UserDict):
             for i in self:
                 if i == name:
                     self.data.pop(name)
+                    self.write_contacts_to_file(filename)
                     return True
         else:
             return None

@@ -4,6 +4,7 @@ from datetime import date, datetime
 import re
 import pickle
 import sys
+import os
 
 from classes.field import Field
 from classes.name import Name
@@ -285,6 +286,45 @@ def sort_notes(notesbook: Notes) -> None:
     show_notes(notesbook, notes_list=sort_result)
 
     input("Press Enter to continue...")
+
+
+def make_menu(notesbook: Notes) -> None:
+    while True:
+        os.system('cls')  # Очищає термінал
+        print(
+""" 
+1. Add note
+2. Edit note (by UID)
+3. Remove note (by UID)
+4. Show note (by UID)
+5. Show all notes
+6. Find notes
+7. Sort notes
+
+0. Exit to previous menu
+"""
+        )
+
+        cmd = input("Choose an action: ")
+
+        if cmd == "0":
+            return
+        elif cmd == "1":
+            add_note(notesbook)
+        elif cmd == "2":
+            edit_note(notesbook)
+        elif cmd == "3":
+            remove_note(notesbook)
+        elif cmd == "4":
+            show_note(notesbook)
+        elif cmd == "5":
+            show_notes(notesbook)
+        elif cmd == "6":
+            find_notes(notesbook)
+        elif cmd == "7":
+            sort_notes(notesbook)
+        else:
+            print("Wrong input!")
 # Функції для роботи з нотатками - кінець
 
 def main():
@@ -415,13 +455,7 @@ def main():
 
 
             elif choice1 == "4":
-                notes = Notes()
-                notes = notes.load_from_file(notes_filename)
-                #notes              
-                #notes 
-                #notes 
-                #notes 
-
+                make_menu(notes)
 
             elif choice1 == "5":
                 break
@@ -515,47 +549,6 @@ def main():
             # elif user_command in ["Exit"]:
             #     print(good_bye_message)
             #     break
-
-        # Так у мене реалізований основний цикл. 
-        # Навожу для того, щоб розуміти, за яким пунктом меню який виклик функції робити
-            
-        # while True:
-        #     os.system('cls')  # Очищає термінал
-        #     print(""" 
-        # 0. Exit
-        # 1. Add note
-        # 2. Edit note (by UID)
-        # 3. Remove note (by UID)
-        # 4. Show note (by UID)
-        # 5. Show all notes
-        # 6. Find notes
-        # 7. Sort notes
-        # 8. Save notes to file
-        # 9. Load notes from file
-        #     """)
-
-        #     cmd = input("Enter command: ")
-        #     if cmd == "0":
-        #         exit()
-        #     elif cmd == "1":
-        #         add_note(notes)
-        #     elif cmd == "2":
-        #         edit_note(notes)
-        #     elif cmd == "3":
-        #         remove_note(notes)
-        #     elif cmd == "4":
-        #         show_note(notes)
-        #     elif cmd == "5":
-        #         show_notes(notes)
-        #     elif cmd == "6":
-        #         find_notes(notes)
-        #     elif cmd == "7":
-        #         sort_notes(notes)
-        #     elif cmd == "8" or cmd == "9":
-        #         pass
-        #     else:
-        #         print("Wrong input!")
-
 
 if __name__ == '__main__':
     main()

@@ -15,10 +15,10 @@ class Birthday(Field):
 
     @value.setter
     def value(self, value):
-        try:
+        if not datetime.strptime(value, "%d/%m/%Y"):
+            raise ValueError(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please')
+        else:
             self.__value = datetime.strptime(value, "%d/%m/%Y")
-        except ValueError:
-            print(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please')
 
     def __str__(self):
         return self.value.strftime('%d/%m/%Y')

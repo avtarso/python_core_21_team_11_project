@@ -6,7 +6,7 @@ from classes.birthday import Birthday
 from classes.phone import Phone
 from classes.email import Email
 from classes.address import Address
-from colorama import init, Fore, Style, Back
+from colorama import init, Fore
 init(autoreset=True)
 
 
@@ -78,6 +78,8 @@ class Record:
             print(Fore.RED + f"Record '{self.name}' yet have field birthday - '{self.birthday.value.strftime('%d/%m/%Y')}'")
 
     def edit_birthday(self, new_birthday):
+        if ValueError:
+            birthday = input("Please reenter the date of birth ")
         self.birthday = Birthday(new_birthday)
         print(Fore.GREEN + f"Editing BIRTHDAY to '{new_birthday}' is successful!")
 

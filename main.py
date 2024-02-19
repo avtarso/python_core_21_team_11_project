@@ -22,6 +22,8 @@ from sort import sort
 
 from classes.settings import filename, PAG, notes_filename
 
+from colorama import init, Fore
+init(autoreset=True)
 
 wellcome_message = f"Please enter your command:  "
 hello_message = "How can I help you?"
@@ -98,7 +100,7 @@ def appruve_record(book, new_record):
     if choise == "1":
         book.write_contacts_to_file(filename)
         print(new_record)
-        print("Record saved successful")
+        print(Fore.GREEN + "Record saved successful")
     elif choise == "2":
         pass
 
@@ -160,7 +162,7 @@ def main():
                         if find_result:
                             book.find_record(find_string).iterator_simple()
                         else:
-                            print(f"I can`t find any matches with '{find_string}'")
+                            print(Fore.RED + f"I can`t find any matches with '{find_string}'")
                     
                     
                     elif choice2 == "3":
@@ -171,15 +173,30 @@ def main():
                     
                     elif choice2 == "4":
                         name = input("Please enter the name ")
-                        phone = input("Please enter the phone ")
-                        email = input("Please enter the email ")
-                        address = input("Please enter the address ")
-                        birthday = input("Please enter the date of birth ")
                         new_record = Record(name)
-                        new_record.add_phone(phone)
-                        new_record.add_email(email)
+                        try:
+                            phone = input("Please enter the phone ")
+                            new_record.add_phone(phone)
+                        except ValueError:
+                            print(Fore.RED + 'Incorrect number format. Please enter a 10-digit number.')
+                            phone = input("Please enter the phone ")
+                            new_record.add_phone(phone)
+                        try:
+                            email = input("Please enter the email ")
+                            new_record.add_email(email)
+                        except ValueError:
+                            print(Fore.RED + 'Incorrect email format. Please enter email like user@example.com.')
+                            email = input("Please enter the email ")
+                            new_record.add_email(email)
+                        address = input("Please enter the address ")
                         new_record.add_address(address)
-                        new_record.add_birthday(birthday)
+                        try:
+                            birthday = input("Please enter the date of birth ")
+                            new_record.add_birthday(birthday)
+                        except ValueError:
+                            print(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please')
+                            birthday = input("Please enter the date of birth ")
+                            new_record.add_birthday(birthday)
                         book.add_record(new_record)
                         print('Contact added')
                         appruve_record(book, new_record)

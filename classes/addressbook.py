@@ -73,18 +73,7 @@ class AddressBook(UserDict):
                 break
             if input(f"-->You can ^^see^^ {i} records from {obj_len}\n-->press any key to continue or 'q' to exit --> ").lower() == "q":
                 break
-    
-    def write_contacts_to_file(self, filename):
-        with open(filename, "wb") as fh:
-            pickle.dump(self, fh)
-    
-    @classmethod
-    def read_contacts_from_file(cls, filename):
-        book = cls()
-        with open(filename, "rb") as fh:
-            book = pickle.load(fh)
-        return book
-    
+        
     def find_record(self, find_string):
         find_string = find_string.lower()
 
@@ -105,14 +94,10 @@ class AddressBook(UserDict):
             book = AddressBook()
             today_date = date.today()
             chek_day  = today_date + timedelta(days=number_days)
-            print(chek_day)
-            print(self.data.items())
             for i, (name, record) in enumerate(self.data.items()):
-                print(record.birthday)
                 if record.birthday:
                     cheked_day = record.birthday.value.date()
                     cheked_day = cheked_day.replace(year=today_date.year)
-                    print(cheked_day)
                     if cheked_day < today_date:
                         cheked_day = cheked_day.replace(year=today_date.year + 1)
                     if cheked_day < chek_day and cheked_day > today_date:
@@ -120,3 +105,62 @@ class AddressBook(UserDict):
             return book
         except ValueError:
             print(Fore.RED + "You must input number days")
+
+    @classmethod
+    def fill_AdressBook(cls):
+
+        book = cls()
+
+        john_record1 = Record("John Black")
+        john_record1.add_phone("1234567890")
+        john_record1.add_email("johnblack@gmail.com")
+        john_record1.add_address("00000, Kyiv, 125")
+        book.add_record(john_record1)
+
+        jane_record1 = Record("Jane Smile")
+        jane_record1.add_phone("9876543210")
+        jane_record1.add_birthday("01/01/2000")
+        book.add_record(jane_record1)
+
+        john_record2 = Record("Johnson")
+        john_record2.add_phone("1234567890")
+        john_record2.add_birthday("01/01/2002")
+        john_record2.add_email("johnson@gmail.com")
+        book.add_record(john_record2)
+
+        jane_record2 = Record("Jane M")
+        jane_record2.add_phone("9876543210")
+        jane_record2.add_birthday("01/06/2024")
+        book.add_record(jane_record2)
+
+        john_record3 = Record("John3")
+        john_record3.add_phone("1234567890")
+        john_record3.add_address("00055, Kyiv, 1")
+        book.add_record(john_record3)
+
+        jane_record3 = Record("Janet")
+        jane_record3.add_phone("9876543210")
+        jane_record3.add_email("janet@gmail.com")
+        jane_record3.add_address("00005, Kyiv, 100")
+        book.add_record(jane_record3)
+
+        book.write_contacts_to_file(filename)
+
+        return book
+    
+
+    def write_contacts_to_file(self, filename):
+        with open(filename, "wb") as fh:
+            pickle.dump(self, fh)
+    
+    @classmethod
+    def read_contacts_from_file(cls, filename):
+        book = cls()
+        try:
+            with open(filename, "rb") as fh:
+                book = pickle.load(fh)
+            return book
+        except FileNotFoundError:
+            print(Fore.RED + "File with recors was deleted or was never created!")
+            print(Fore.GREEN + "I created a file with a records for example!")
+            return book.fill_AdressBook()

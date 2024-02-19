@@ -19,7 +19,7 @@ from classes.note import Note
 from classes.notes import Notes
 from classes.functions import make_menu 
 
-from sort import sort
+from classes.sort import sort
 
 from classes.settings import filename, PAG, notes_filename
 
@@ -122,7 +122,8 @@ def main():
 2 - Hello, User!
 3 - Use Records
 4 - Use Notes
-5 - Exit
+5 - Sort Files in Folder
+6 - Exit
 '''
 
         while True:
@@ -215,8 +216,14 @@ def main():
             elif choice1 == "4":
                 notes = Notes().load_from_file(notes_filename)
                 make_menu(notes)
-
+            
             elif choice1 == "5":
+                
+                print("Please, input folder name")
+                print(Fore.RED + "Carefully! Files will be sorted! You won't be able to find them in your usual place!")
+                sort(input())
+
+            elif choice1 == "6":
                 break
 
 

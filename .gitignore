@@ -1,5 +1,7 @@
 # пропишить тут свої папки, які не потрібно закачувати на гіт
 teambot/
 __pycache__/
-111.py
-menu.py
+clssses/__pycache__/
+bot/
+test/
+test1/

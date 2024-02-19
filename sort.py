@@ -107,7 +107,7 @@ def sort(path):
                 print(file_name)
     if len(list_of_use_extensions) > 0:
         print(
-            f"\nIidentified file types")
+            f"\nIdentified file types")
         for type in list_of_use_extensions:
             print(type)
 

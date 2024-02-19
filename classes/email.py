@@ -1,6 +1,7 @@
 from classes.field import Field
 import re
 from colorama import init, Fore
+
 init(autoreset=True)
 
 

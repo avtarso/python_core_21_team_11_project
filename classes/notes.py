@@ -94,7 +94,7 @@ class Notes(UserDict):
             note_tags = value[0].show_tags()
 
             for tag in note_tags:
-                if tag.find(find_str) != -1:
+                if tag.lower().find(find_str.lower()) != -1:
                     result.append(self.show_note(key))
                     find_tag = True
                     break
@@ -102,7 +102,7 @@ class Notes(UserDict):
             if find_tag:
                 continue
 
-            if note_text.find(find_str) != -1:
+            if note_text.lower().find(find_str.lower()) != -1:
                 result.append(self.show_note(key))
 
         return result

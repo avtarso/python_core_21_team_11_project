@@ -29,18 +29,27 @@ def make_header(title: str) -> None:
     Fore.RESET
 
 
-def save_changes(notesbook: Notes) -> None:
+def save_changes(notesbook: Notes, p=False) -> None:
+
+    if p:
+        make_header("SAVE NOTES TO FILE")
+
     choice = input(
         "\nDo you want to save your changes? (1 = yes / any key = no): ")
 
     if choice == "1":
         try:
             notesbook.save_to_file(notes_filename)
+
             print(Fore.GREEN + "\nChanges saved successfully!")
             Fore.RESET
+
         except:
             print(Fore.RED + "\nError saving changes!")
             Fore.RESET
+    
+    if p:
+        input("\nPress Enter to continue...")
 
 
 def add_note(notesbook: Notes) -> None:
@@ -169,8 +178,11 @@ def remove_note(notesbook: Notes) -> None:
 
     if choice == "1":
         notesbook.remove_note(uid)
+
         print(Fore.GREEN + "\nSuccess!")
         Fore.RESET
+
+        save_changes(notesbook)
 
     input("\nPress Enter to continue...")
 
@@ -183,9 +195,16 @@ def show_note(notesbook: Notes) -> None:
 
     try:
         uid = int(uid)
-        show_notes(notesbook, uid=uid)
+        if not notesbook.is_note_exists(uid):
+            raise ValueError
     except:
-        show_notes(notesbook, uid=-1)
+        print(Fore.RED + "\nA note with this UID does not exist!")
+        Fore.RESET
+
+        input("\nPress Enter to continue...")
+        return
+    
+    show_notes(notesbook, uid=uid)
 
     input("\nPress Enter to continue...")
 
@@ -336,6 +355,7 @@ def make_menu(notesbook: Notes) -> None:
 5. Show all notes
 6. Find notes
 7. Sort notes
+8. Save notes to file
 
 0. Exit to previous menu
 """
@@ -359,6 +379,8 @@ def make_menu(notesbook: Notes) -> None:
             find_notes(notesbook)
         elif cmd == "7":
             sort_notes(notesbook)
+        elif cmd == "8":
+            save_changes(notesbook, p=True)
         else:
             print("Wrong input!")
 # Функції для роботи з нотатками - кінець

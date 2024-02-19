@@ -114,9 +114,6 @@ def main():
 
     else:
 
-        notes = Notes()
-        notes = notes.load_from_file(notes_filename)
-        
         main_menu = '''Main Menu: Please, input your choice:
 1 - About Bot Helper
 2 - Hello, User!
@@ -199,6 +196,8 @@ def main():
 
 
             elif choice1 == "4":
+                
+                notes = Notes().load_from_file(notes_filename)
                 make_menu(notes)
 
             elif choice1 == "5":

@@ -150,10 +150,15 @@ class Notes(UserDict):
             pickle.dump(self, file)
 
     def load_from_file(self, filename):
-        with open(filename, "rb") as file:
-            content = pickle.load(file)
 
-        return content
+        try:
+            with open(filename, "rb") as file:
+                self = pickle.load(file)
+             
+        except:
+            pass
+
+        return self
 
     def __repr__(self):
 

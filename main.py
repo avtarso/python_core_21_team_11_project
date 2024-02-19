@@ -129,10 +129,13 @@ def main():
             choice1 = input(main_menu)
 
             if choice1 == "1":
-                pass
-                #about bot
+                print(Fore.CYAN + "I'm a great bot and I will facilitate your work, now I will describe what I can do\n"
+                      "I can work with contact: add, edit, remove contact's phone, email, birthday, address.\nAlso "
+                      "I can work with your notes: add, edit, remove, show note or all notes, find and sort notes.\n"
+                      "And finally, I have very useful function - sort, it helps you to sort all your files in "
+                      "some directory. \nWhere do you want to start?")
             elif choice1 == "2":
-                #hello user
+                print(Fore.CYAN + 'Hello! How are you today? Are you ready to work?')
                 pass
 
             elif choice1 == "3":
@@ -145,12 +148,12 @@ def main():
                     record_menu = '''Record menu: Please, input your choice:
 1. Show all Records
 2. Find Records
-3. Show Record whith birthday in N days
+3. Show Record with birthday in N days
 4. Add Record
 5. Edit Record
 6. Delete record
-7. Save AdressBook and Exit
-8. Exit to prewius menu
+7. Save AddressBook and Exit
+8. Exit to previous menu
 '''
                     choice2 = input(record_menu)
                     if choice2 == "1":
@@ -164,12 +167,9 @@ def main():
                         else:
                             print(Fore.RED + f"I can`t find any matches with '{find_string}'")
                     
-                    
                     elif choice2 == "3":
                         days_to_serch = input("Please, input number of days to search")
                         book.find_birthdays(days_to_serch).iterator()
-    
-                    
                     
                     elif choice2 == "4":
                         name = input("Please enter the name ")
@@ -211,9 +211,7 @@ def main():
                     elif choice2 == "8":
                         switcher = False
 
-
             elif choice1 == "4":
-                
                 notes = Notes().load_from_file(notes_filename)
                 make_menu(notes)
 

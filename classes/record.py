@@ -83,7 +83,6 @@ class Record:
         self.birthday = Birthday(new_birthday)
         print(Fore.GREEN + f"Editing BIRTHDAY to '{new_birthday}' is successful!")
 
-
     def delete_birthday(self): #в завданні відсутній, але потрібний для консистентності
         pass 
 

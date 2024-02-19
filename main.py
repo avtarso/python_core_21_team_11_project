@@ -100,7 +100,7 @@ def appruve_record(book, new_record):
     if choise == "1":
         book.write_contacts_to_file(filename)
         print(new_record)
-        print("Record saved successful")
+        print(Fore.GREEN + "Record saved successful")
     elif choise == "2":
         pass
 
@@ -165,7 +165,7 @@ def main():
                         if find_result:
                             book.find_record(find_string).iterator_simple()
                         else:
-                            print(f"I can`t find any matches with '{find_string}'")
+                            print(Fore.RED + f"I can`t find any matches with '{find_string}'")
                     
                     
                     elif choice2 == "3":

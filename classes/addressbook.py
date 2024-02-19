@@ -10,6 +10,10 @@ from classes.record import Record
 
 from classes.settings import filename, PAG
 
+from colorama import init, Fore
+
+init(autoreset=True)
+
 
 class AddressBook(UserDict):
     def add_record(self, record):
@@ -30,10 +34,10 @@ class AddressBook(UserDict):
                 if i == name:
                     self.data.pop(name)
                     self.write_contacts_to_file(filename)
-                    print(f"Record '{name}' deleted successful!")
+                    print(Fore.GREEN + f"Record '{name}' deleted successful!")
                     return True
         else:
-            print(f"Record '{name}' not found!")
+            print(Fore.RED + f"Record '{name}' not found!")
             return None
 
     def iterator_simple(self):
@@ -115,4 +119,4 @@ class AddressBook(UserDict):
                         book.add_record(record)
             return book
         except ValueError:
-            print("you must input number days")
+            print(Fore.RED + "You must input number days")

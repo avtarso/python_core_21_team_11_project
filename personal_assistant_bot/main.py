@@ -21,7 +21,7 @@ except:
 
     from classes.note import Note
     from classes.notes import Notes
-    from classes.functions import make_menu
+    from classes.functions import make_menu, make_header
 
     from classes.sort import sort
 
@@ -163,8 +163,9 @@ def main():
                 pass
 
             elif choice1 == "3":
-                switcher = True
 
+                switcher = True
+                make_header("ADDESSBOOK MENU")
                 while switcher:
 
                     book = AddressBook()
@@ -181,8 +182,10 @@ def main():
 '''
                     choice2 = input(record_menu)
                     if choice2 == "1":
+                        make_header("SHOW ALL RECORDS")
                         book.iterator()
                     elif choice2 == "2":
+                        make_header("FIND RECORDS")
                         find_string = input("Please input Name of record, which you want find: ")
                         find_result = AddressBook()
                         find_result = book.find_record(find_string)
@@ -192,10 +195,12 @@ def main():
                             print(Fore.RED + f"I can`t find any matches with '{find_string}'")
                     
                     elif choice2 == "3":
-                        days_to_serch = input("Please, input number of days to search")
+                        make_header("SHOW RECORD FROM BIRTHDAY")
+                        days_to_serch = input("Please, input number of days to search ")
                         book.find_birthdays(days_to_serch).iterator()
                     
                     elif choice2 == "4":
+                        make_header("ADD RECORD")
                         name = input("Please enter the name ")
                         new_record = Record(name)
                         try:
@@ -225,8 +230,10 @@ def main():
                         print('Contact added')
                         appruve_record(book, new_record)
                     elif choice2 == "5":
+                        make_header("EDIT RECORD")
                         edit_record(book)
                     elif choice2 == "6":
+                        make_header("DELETE RECORD")
                         contact_name = input("Please enter contact name you need to delete ")
                         book.delete(contact_name)            
                     elif choice2 == "7":

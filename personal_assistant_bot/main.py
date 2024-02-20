@@ -8,7 +8,7 @@ import sys
 
 import importlib.resources
 try:
-    importlib.resources.files("personal_assistant")
+    importlib.resources.files("personal_assistant_bot")
 except:
     from classes.field import Field
     from classes.name import Name
@@ -27,22 +27,22 @@ except:
 
     from classes.settings import filename, PAG, notes_filename
 else:
-    from personal_assistant.classes.field import Field
-    from personal_assistant.classes.name import Name
-    from personal_assistant.classes.birthday import Birthday
-    from personal_assistant.classes.phone import Phone
-    from personal_assistant.classes.email import Email
-    from personal_assistant.classes.address import Address
-    from personal_assistant.classes.record import Record
-    from personal_assistant.classes.addressbook import AddressBook
+    from personal_assistant_bot.classes.field import Field
+    from personal_assistant_bot.classes.name import Name
+    from personal_assistant_bot.classes.birthday import Birthday
+    from personal_assistant_bot.classes.phone import Phone
+    from personal_assistant_bot.classes.email import Email
+    from personal_assistant_bot.classes.address import Address
+    from personal_assistant_bot.classes.record import Record
+    from personal_assistant_bot.classes.addressbook import AddressBook
 
-    from personal_assistant.classes.note import Note
-    from personal_assistant.classes.notes import Notes
-    from personal_assistant.classes.functions import make_menu
+    from personal_assistant_bot.classes.note import Note
+    from personal_assistant_bot.classes.notes import Notes
+    from personal_assistant_bot.classes.functions import make_menu
 
-    from personal_assistant.classes.sort import sort
+    from personal_assistant_bot.classes.sort import sort
 
-    from personal_assistant.classes.settings import filename, PAG, notes_filename
+    from personal_assistant_bot.classes.settings import filename, PAG, notes_filename
 
 
 from colorama import init, Fore

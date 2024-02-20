@@ -1,7 +1,4 @@
-# пропишить тут свої папки, які не потрібно закачувати на гіт
-teambot/
-__pycache__/
-clssses/__pycache__/
+personal_assistant_bot/personal_assistant_bot/classes/__pycache__
+personal_assistant_bot/personal_assistant_bot/__pycache__
+personal_assistant_bot/__pycache__
 bot/
-test/
-test1/

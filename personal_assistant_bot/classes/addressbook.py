@@ -1,17 +1,15 @@
 from collections import UserDict
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 import pickle
 
-from .field import Field
-from .name import Name
-from .birthday import Birthday
-from .phone import Phone
+# from .field import Field
+# from .name import Name
+# from .birthday import Birthday
+# from .phone import Phone
 from .record import Record
-
 from .settings import filename, PAG
 
 from colorama import init, Fore
-
 init(autoreset=True)
 
 
@@ -89,9 +87,9 @@ class AddressBook(UserDict):
         return book
     
     def find_birthdays(self, number):
+        book = AddressBook()
         try:
-            number_days = int(number)
-            book = AddressBook()
+            number_days = int(number)            
             today_date = date.today()
             chek_day  = today_date + timedelta(days=number_days)
             for i, (name, record) in enumerate(self.data.items()):
@@ -102,9 +100,10 @@ class AddressBook(UserDict):
                         cheked_day = cheked_day.replace(year=today_date.year + 1)
                     if cheked_day < chek_day and cheked_day > today_date:
                         book.add_record(record)
-            return book
         except ValueError:
             print(Fore.RED + "You must input number days")
+        finally:
+            return book
 
     @classmethod
     def fill_AdressBook(cls):

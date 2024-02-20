@@ -1,5 +1,7 @@
-from datetime import date, datetime
+from datetime import datetime
+
 from .field import Field
+
 from colorama import init, Fore
 init(autoreset=True)
 

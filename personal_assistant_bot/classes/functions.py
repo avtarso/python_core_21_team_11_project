@@ -1,7 +1,7 @@
+from os import system
+
 from .note import Note
 from .notes import Notes
-
-from os import system
 from .settings import PAG, notes_filename
 
 from colorama import Fore

@@ -6,7 +6,7 @@ from .settings import PAG, notes_filename
 
 from colorama import Fore
 
-# Функції для роботи з нотатками - початок
+
 def split_text(text: str) -> list:
 
     NOTE_LEN = 40
@@ -389,7 +389,6 @@ def make_menu(notesbook: Notes) -> None:
             save_changes(notesbook, p=True)
         else:
             print("Wrong input!")
-# Функції для роботи з нотатками - кінець
 
 
 if __name__ == '__main__':

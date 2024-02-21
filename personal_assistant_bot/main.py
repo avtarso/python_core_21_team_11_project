@@ -1,67 +1,23 @@
-# from collections import UserDict
-# from datetime import date, datetime
-
-# import os
-# import re
-# import pickle
-#import sys
-
 import importlib.resources
 try:
     importlib.resources.files("personal_assistant_bot")
 except:
-    # from classes.field import Field
-    # from classes.name import Name
-    # from classes.birthday import Birthday
-    # from classes.phone import Phone
-    # from classes.email import Email
-    # from classes.address import Address
     from classes.record import Record
     from classes.addressbook import AddressBook
-
-    #from classes.note import Note
     from classes.notes import Notes
     from classes.functions import make_menu, make_header
     from classes.sort import sort
     from classes.settings import filename, notes_filename
 else:
-    # from personal_assistant_bot.classes.field import Field
-    # from personal_assistant_bot.classes.name import Name
-    # from personal_assistant_bot.classes.birthday import Birthday
-    # from personal_assistant_bot.classes.phone import Phone
-    # from personal_assistant_bot.classes.email import Email
-    # from personal_assistant_bot.classes.address import Address
     from personal_assistant_bot.classes.record import Record
     from personal_assistant_bot.classes.addressbook import AddressBook
-
-    #from personal_assistant_bot.classes.note import Note
     from personal_assistant_bot.classes.notes import Notes
     from personal_assistant_bot.classes.functions import make_menu, make_header
     from personal_assistant_bot.classes.sort import sort
     from personal_assistant_bot.classes.settings import filename, notes_filename
 
-
 from colorama import init, Fore
 init(autoreset=True)
-
-wellcome_message = f"Please enter your command:  "
-hello_message = "How can I help you?"
-good_bye_message = "Good bye!"
-bad_command = "Incorrect command!"
-add = "Please write name, address, phone, email, date of birth"
-change = "Write the name of the contact you want to change"
-delete = "Write the name of contact you want to delete"
-find = "Write the name or phone number of the contact you want to find"
-help_string = """For working with me, please, input one of next command:
-"hello" - I print "How can I help you?"
-"show all" - I print all recorded phone numbers
-"find" - I find record by name or phone
-"good bye", "close" or "exit" - I stop working
-"help" - I print this text
-"add" - I add name, phone, email, date of birth, address
-"change" - I can change the data
-"delete" - I can delete contact"""
-  
 
 def edit_record(book):
 
@@ -140,7 +96,6 @@ def appruve_record(book, new_record):
     choise = input()
     if choise == "1":
         book.write_contacts_to_file(filename)
-        #print(new_record)
         print(Fore.GREEN + "Changes saved successful")
     elif choise == "2":
         book.delete(new_record)
@@ -324,6 +279,10 @@ Please, input your choice: '''
                 pass
             else:
                 sort(folder)
+
+                print(Fore.GREEN + f"\nFiles and folders in {folder} sorted successful!")
+
+                input("\nPress Enter to continue...")
 
         elif choice1 == "0":
             break

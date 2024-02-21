@@ -1,48 +1,44 @@
-from collections import UserDict
-from datetime import date, datetime
+# from collections import UserDict
+# from datetime import date, datetime
 
-import os
-import re
-import pickle
-import sys
+# import os
+# import re
+# import pickle
+#import sys
 
 import importlib.resources
 try:
     importlib.resources.files("personal_assistant_bot")
 except:
-    from classes.field import Field
-    from classes.name import Name
-    from classes.birthday import Birthday
-    from classes.phone import Phone
-    from classes.email import Email
-    from classes.address import Address
+    # from classes.field import Field
+    # from classes.name import Name
+    # from classes.birthday import Birthday
+    # from classes.phone import Phone
+    # from classes.email import Email
+    # from classes.address import Address
     from classes.record import Record
     from classes.addressbook import AddressBook
 
-    from classes.note import Note
+    #from classes.note import Note
     from classes.notes import Notes
     from classes.functions import make_menu, make_header
-
     from classes.sort import sort
-
-    from classes.settings import filename, PAG, notes_filename
+    from classes.settings import filename, notes_filename
 else:
-    from personal_assistant_bot.classes.field import Field
-    from personal_assistant_bot.classes.name import Name
-    from personal_assistant_bot.classes.birthday import Birthday
-    from personal_assistant_bot.classes.phone import Phone
-    from personal_assistant_bot.classes.email import Email
-    from personal_assistant_bot.classes.address import Address
+    # from personal_assistant_bot.classes.field import Field
+    # from personal_assistant_bot.classes.name import Name
+    # from personal_assistant_bot.classes.birthday import Birthday
+    # from personal_assistant_bot.classes.phone import Phone
+    # from personal_assistant_bot.classes.email import Email
+    # from personal_assistant_bot.classes.address import Address
     from personal_assistant_bot.classes.record import Record
     from personal_assistant_bot.classes.addressbook import AddressBook
 
-    from personal_assistant_bot.classes.note import Note
+    #from personal_assistant_bot.classes.note import Note
     from personal_assistant_bot.classes.notes import Notes
-    from personal_assistant_bot.classes.functions import make_menu
-
+    from personal_assistant_bot.classes.functions import make_menu, make_header
     from personal_assistant_bot.classes.sort import sort
-
-    from personal_assistant_bot.classes.settings import filename, PAG, notes_filename
+    from personal_assistant_bot.classes.settings import filename, notes_filename
 
 
 from colorama import init, Fore
@@ -69,191 +65,269 @@ help_string = """For working with me, please, input one of next command:
 
 def edit_record(book):
 
-    contact_name = input("Please enter the name of the contact what you want to change ")
+    contact_name = input("\nPlease enter the name of the contact what you want to change: ")
     find_record = book.find(contact_name)
     if find_record is None:
-        print("Contact name not found ")
+        print(Fore.RED + "\nContact name not found!")
     else:
-        edit_record_menu = '''Edit Record menu: Please, input your choice:
+        edit_record_menu = '''\nEdit Record menu:
 1. Edit Name
 2. Edit Phone
 3. Edit Birthday
 4. Edit Email
 5. Edit Address
 6. Save and Exit
-7. Exit''' 
+7. Exit'''
         edit_swither = True
         while  edit_swither:
+            print("")
             print(find_record)
             print(edit_record_menu)
-            choice = input()
+            choice = input("\nPlease input your choice: ")
             if choice == '7':
                 break
             elif choice == "1":
-                new_name = input("Please enter new name ")
+                new_name = input("Please enter new Name: ")
+                print("")
                 find_record.edit_name(new_name)
                 if new_name != contact_name:
                     book.add_record(find_record)
                     book.delete(contact_name)
             elif choice == "2":
-                print("Please enter new phone ")
-                new_phone = input("Please enter new phone ")
-                find_record.add_phone(new_phone)
+                while True:
+                    new_phone = input("Please enter new Phone: ")
+                    print("")
+                    try:
+                        find_record.add_phone(new_phone)
+                    except:
+                        pass
+                    else:
+                        break
             elif choice == "3":
-                new_birthday = input("Please enter new birthday ")
-                find_record.edit_birthday(new_birthday)
+                while True:
+                    new_birthday = input("Please enter new Birthday in format DD/MM/YYYY: ")
+                    print("")
+                    try:
+                        find_record.edit_birthday(new_birthday)
+                    except:
+                        pass
+                    else:
+                        break
             elif choice == "4":
-                new_email = input("Please enter new email ")
-                find_record.edit_email(new_email)
+                while True:
+                    new_email = input("Please enter new Email: ")
+                    print("")
+                    try:
+                        find_record.edit_email(new_email)
+                    except:
+                        pass
+                    else:
+                        break
             elif choice == "5":
-                new_address = input("Please enter new address ")
+                new_address = input("Please enter new Address: ")
+                print("")
                 find_record.edit_address(new_address) 
             elif choice == "6":
                 book.write_contacts_to_file(filename)
+                print(Fore.GREEN + "\nChanges saved successful")
                 break
-
 
 def appruve_record(book, new_record):
     print(new_record)
-    print('''What You will do with this record?
-1 - Save
-2 - Edit
-3 - Delete''')
+    print('''\nWhat You will do with this record?
+1 - Save changes
+2 - Discard changes''')
     choise = input()
     if choise == "1":
         book.write_contacts_to_file(filename)
-        print(new_record)
-        print(Fore.GREEN + "Record saved successful")
+        #print(new_record)
+        print(Fore.GREEN + "Changes saved successful")
     elif choise == "2":
-        pass
-
-    elif choise == "3":
         book.delete(new_record)
+        print(Fore.GREEN + "Changes discard successful")
 
 
 def main():
     
-    if len(sys.argv) > 1:
-        sort(sys.argv[1])
-        quit()
+    main_menu = '''
+1. About Bot Helper
+2. Hello, User!
+3. Use Records
+4. Use Notes
+5. Sort Files in Folder
 
-    else:
+0. Exit
 
-        main_menu = '''Main Menu: Please, input your choice:
-1 - About Bot Helper
-2 - Hello, User!
-3 - Use Records
-4 - Use Notes
-5 - Sort Files in Folder
-6 - Exit
-'''
+Please, input your choice: '''
 
-        while True:
+    while True:
 
-            choice1 = input(main_menu)
+        make_header("MAIN MENU")
+        choice1 = input(main_menu)
 
-            if choice1 == "1":
-                print(Fore.CYAN + "I'm a great bot and I will facilitate your work, now I will describe what I can do\n"
-                      "I can work with contact: add, edit, remove contact's phone, email, birthday, address.\nAlso "
-                      "I can work with your notes: add, edit, remove, show note or all notes, find and sort notes.\n"
-                      "And finally, I have very useful function - sort, it helps you to sort all your files in "
-                      "some directory. \nWhere do you want to start?")
-            elif choice1 == "2":
-                print(Fore.CYAN + 'Hello! How are you today? Are you ready to work?')
-                pass
+        if choice1 == "1":
 
-            elif choice1 == "3":
+            make_header("ABOUT BOT HELPER")
+            print("\nI'm a great bot and I will facilitate your work, now I will describe what I can do\n"
+                    "I can work with contact: add, edit, remove contact's phone, email, birthday, address.\nAlso "
+                    "I can work with your notes: add, edit, remove, show note or all notes, find and sort notes.\n"
+                    "And finally, I have very useful function - sort, it helps you to sort all your files in "
+                    "some directory. \nWhere do you want to start?")
+            
+            input("\nPress Enter to continue...")
 
-                switcher = True
-                make_header("ADDESSBOOK MENU")
-                while switcher:
+        elif choice1 == "2":
 
-                    book = AddressBook()
-                    book = AddressBook.read_contacts_from_file(filename)
-                    record_menu = '''Record menu: Please, input your choice:
+            make_header("HELLO, USER!")
+            print('\nHello! How are you today? Are you ready to work?')
+
+            input("\nPress Enter to continue...")
+
+        elif choice1 == "3":
+
+            switcher = True                
+            while switcher:
+
+                book = AddressBook()
+                book = AddressBook.read_contacts_from_file(filename)
+                record_menu = '''
 1. Show all Records
 2. Find Records
-3. Show Record with birthday in N days
+3. Show Records with birthday in N days
 4. Add Record
 5. Edit Record
-6. Delete record
-7. Save AddressBook and Exit
-8. Exit to previous menu
-'''
-                    choice2 = input(record_menu)
-                    if choice2 == "1":
-                        make_header("SHOW ALL RECORDS")
-                        book.iterator()
-                    elif choice2 == "2":
-                        make_header("FIND RECORDS")
-                        find_string = input("Please input Name of record, which you want find: ")
-                        find_result = AddressBook()
-                        find_result = book.find_record(find_string)
-                        if find_result:
-                            book.find_record(find_string).iterator_simple()
-                        else:
-                            print(Fore.RED + f"I can`t find any matches with '{find_string}'")
+6. Delete Record
+7. Save AddressBook
+
+0. Exit to previous menu
+
+Please, input your choice: '''
+
+                make_header("ADDESSBOOK MENU")
+                choice2 = input(record_menu)
+
+                if choice2 == "1":
+                    make_header("SHOW ALL RECORDS")
+                    print("")
+
+                    book.iterator()
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "2":
+                    make_header("FIND RECORDS")
+
+                    find_string = input("\nPlease input Name of record, which you want find: ")
+
+                    find_result = AddressBook()
+                    find_result = book.find_record(find_string)
                     
-                    elif choice2 == "3":
-                        make_header("SHOW RECORD FROM BIRTHDAY")
-                        days_to_serch = input("Please, input number of days to search ")
-                        book.find_birthdays(days_to_serch).iterator()
-                    
-                    elif choice2 == "4":
-                        make_header("ADD RECORD")
-                        name = input("Please enter the name ")
-                        new_record = Record(name)
-                        try:
-                            phone = input("Please enter the phone ")
+                    if find_result:
+                        print("")
+                        book.find_record(find_string).iterator_simple()
+                    else:
+                        print(Fore.RED + f"\nI can`t find any matches with '{find_string}'")
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "3":
+                    make_header("N DAYS FROM BIRTHDAY")
+
+                    days_to_serch = input("\nPlease input number of days to search: ")
+                    print("")
+
+                    book.find_birthdays(days_to_serch).iterator()
+
+                    input("\nPress Enter to continue...")
+                
+                elif choice2 == "4":
+                    make_header("ADD RECORD")
+
+                    name = input("\nPlease enter the name: ")
+                    new_record = Record(name)
+
+                    while True:
+                        phone = input("Please enter the phone: ")
+                        try:                                
                             new_record.add_phone(phone)
                         except ValueError:
                             print(Fore.RED + 'Incorrect number format. Please enter a 10-digit number.')
-                            phone = input("Please enter the phone ")
-                            new_record.add_phone(phone)
-                        try:
-                            email = input("Please enter the email ")
+                        else:
+                            break
+
+                    while True:
+                        email = input("Please enter the email: ")
+                        try:                            
                             new_record.add_email(email)
                         except ValueError:
                             print(Fore.RED + 'Incorrect email format. Please enter email like user@example.com.')
-                            email = input("Please enter the email ")
-                            new_record.add_email(email)
-                        address = input("Please enter the address ")
-                        new_record.add_address(address)
-                        try:
-                            birthday = input("Please enter the date of birth ")
+                        else:
+                            break
+
+                    address = input("Please enter the address: ")
+                    new_record.add_address(address)
+
+                    while True:
+                        birthday = input("Please enter the date of birth in format DD/MM/YYYY: ")
+                        try:                                
                             new_record.add_birthday(birthday)
                         except ValueError:
-                            print(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please')
-                            birthday = input("Please enter the date of birth ")
-                            new_record.add_birthday(birthday)
-                        book.add_record(new_record)
-                        print('Contact added')
-                        appruve_record(book, new_record)
-                    elif choice2 == "5":
-                        make_header("EDIT RECORD")
-                        edit_record(book)
-                    elif choice2 == "6":
-                        make_header("DELETE RECORD")
-                        contact_name = input("Please enter contact name you need to delete ")
-                        book.delete(contact_name)            
-                    elif choice2 == "7":
-                        book.write_contacts_to_file(filename)
-                        quit()      
-                    elif choice2 == "8":
-                        switcher = False
+                            print(Fore.RED + 'Waiting format of date - DD/MM/YYYY. Reinput, please.')
+                        else:
+                            break
 
-            elif choice1 == "4":
-                notes = Notes().load_from_file(notes_filename)
-                make_menu(notes)
-            
-            elif choice1 == "5":
-                
-                print("Please, input folder name")
-                print(Fore.RED + "Carefully! Files will be sorted! You won't be able to find them in your usual place!")
-                sort(input())
+                    book.add_record(new_record)
+                    print(Fore.GREEN + "\nRecord added successful!\n")
 
-            elif choice1 == "6":
-                break
+                    appruve_record(book, new_record)
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "5":
+                    make_header("EDIT RECORD")
+                    
+                    edit_record(book)
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "6":
+                    make_header("DELETE RECORD")
+                    
+                    contact_name = input("\nPlease enter contact name you need to delete: ")
+                    print("")
+                    
+                    book.delete(contact_name)
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "7":
+                    make_header("SAVE ADDRESSBOOK")
+                    book.write_contacts_to_file(filename)
+
+                    print(Fore.GREEN + "\nAddressBook saved successful!")
+
+                    input("\nPress Enter to continue...")
+
+                elif choice2 == "0":
+                    switcher = False
+
+        elif choice1 == "4":
+            notes = Notes().load_from_file(notes_filename)
+            make_menu(notes)
+        
+        elif choice1 == "5":
+            make_header("SORT FILES IN FOLDER")
+            print(Fore.RED + "\nCarefully! Files will be sorted! You won't be able to find them in your usual place!")
+
+            folder = input("\nPlease input folder name or press Enter to exit: ")
+
+            if not folder:
+                pass
+            else:
+                sort(folder)
+
+        elif choice1 == "0":
+            break
 
 
 if __name__ == '__main__':

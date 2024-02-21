@@ -1,6 +1,6 @@
 from .field import Field
-from colorama import init, Fore
 
+from colorama import init, Fore
 init(autoreset=True)
 
 

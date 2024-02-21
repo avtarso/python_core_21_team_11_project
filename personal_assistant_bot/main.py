@@ -208,7 +208,6 @@ Please, input your choice: '''
 
                 if choice2 == "1":
                     make_header("SHOW ALL RECORDS")
-                    print("")
 
                     book.iterator()
 

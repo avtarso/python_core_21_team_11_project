@@ -13,8 +13,11 @@ def sort(path):
         return f"{new_name}.{'.'.join(extension)}"
 
     def getExtension(name: str) -> str:
-        name, extension = name.split('.')
-        return extension
+        try:
+            name, extension = name.split('.')
+            return extension
+        except ValueError:
+            return ""
 
     def makeDir(name):
         if not os.path.exists(name):

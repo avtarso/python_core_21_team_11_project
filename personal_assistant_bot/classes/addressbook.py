@@ -16,7 +16,7 @@ init(autoreset=True)
 class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
-        self.write_contacts_to_file(filename)
+        #self.write_contacts_to_file(filename)
 
     def find(self, name):
         if name in self:

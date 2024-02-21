@@ -3,7 +3,7 @@
 Simple install! Only one command in terminal!
 
 ```
-pip install -i https://test.pypi.org/simple/ personal-assistant-bot==0.1.0
+pip install -i https://test.pypi.org/simple/ personal-assistant-bot==0.2.0
 ```
 
 ## What can this bot do?

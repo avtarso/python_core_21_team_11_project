@@ -2,10 +2,6 @@ from collections import UserDict
 from datetime import date, timedelta
 import pickle
 
-# from .field import Field
-# from .name import Name
-# from .birthday import Birthday
-# from .phone import Phone
 from .record import Record
 from .settings import filename, PAG
 
@@ -16,7 +12,6 @@ init(autoreset=True)
 class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
-        #self.write_contacts_to_file(filename)
 
     def find(self, name):
         if name in self:

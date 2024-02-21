@@ -1,6 +1,5 @@
 from datetime import date
 
-#from .field import Field
 from .name import Name
 from .birthday import Birthday
 from .phone import Phone
@@ -79,8 +78,6 @@ class Record:
             print(Fore.RED + f"Record '{self.name}' yet have field birthday - '{self.birthday.value.strftime('%d/%m/%Y')}'")
 
     def edit_birthday(self, new_birthday):
-        # if ValueError:
-        #     birthday = input("Please reenter the date of birth ")
         self.birthday = Birthday(new_birthday)
         print(Fore.GREEN + f"Editing BIRTHDAY to '{new_birthday}' is successful!")
 
@@ -110,7 +107,6 @@ class Record:
 
     def remove_email(self):
         if self.email:
-            #del self.email
             self.email = Email("")
             print(Fore.GREEN + f"Removing EMAIL '{self.email}' is successful!")
         else:

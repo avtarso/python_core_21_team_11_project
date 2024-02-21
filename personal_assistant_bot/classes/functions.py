@@ -1,4 +1,4 @@
-from os import system
+from os import system, name
 
 from .note import Note
 from .notes import Notes
@@ -22,7 +22,13 @@ def split_text(text: str) -> list:
 
 
 def make_header(title: str) -> None:
-    system('cls')
+    # for windows
+    if name == 'nt':
+        system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        system('clear')
+
     print(Fore.CYAN + "*" * 30)
     print(Fore.CYAN + "*{:^28}*".format(title))
     print(Fore.CYAN + "*" * 30)

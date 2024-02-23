@@ -1,7 +1,7 @@
 from datetime import datetime
 
-import sys
-sys.path.append('..')
+# import sys
+# sys.path.append('..')
 
 from classes.field import Field
 

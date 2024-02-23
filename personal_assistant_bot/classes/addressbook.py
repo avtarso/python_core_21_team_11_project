@@ -2,8 +2,8 @@ from collections import UserDict
 from datetime import date, timedelta
 import pickle
 
-import sys
-sys.path.append('..')
+# import sys
+# sys.path.append('..')
 
 from classes.record import Record
 from settings.settings import addressbook_filename, PAG

@@ -1,7 +1,7 @@
 from datetime import date
 
-import sys
-sys.path.append('..')
+# import sys
+# sys.path.append('..')
 
 from classes.name import Name
 from classes.birthday import Birthday

@@ -1,38 +1,17 @@
-from os import system, name
-
-from .note import Note
-from .notes import Notes
-from .settings import PAG, notes_filename
+try:
+   from classes.note import Note
+   from classes.notes import Notes
+   from settings.settings import PAG, notes_filename
+   from functions.split_text import split_text
+   from functions.make_header import make_header
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.note import Note
+   from personal_assistant_bot.classes.notes import Notes
+   from personal_assistant_bot.settings.settings import PAG, notes_filename
+   from personal_assistant_bot.functions.split_text import split_text
+   from personal_assistant_bot.functions.make_header import make_header
 
 from colorama import Fore
-
-
-def split_text(text: str) -> list:
-
-    NOTE_LEN = 40
-
-    result = []
-
-    while len(text) > NOTE_LEN:
-        result.append(text[0:NOTE_LEN])
-        text = text[NOTE_LEN:]
-    result.append(text)
-
-    return result
-
-
-def make_header(title: str) -> None:
-    # for windows
-    if name == 'nt':
-        system('cls')
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        system('clear')
-
-    print(Fore.CYAN + "*" * 30)
-    print(Fore.CYAN + "*{:^28}*".format(title))
-    print(Fore.CYAN + "*" * 30)
-    Fore.RESET
 
 
 def save_changes(notesbook: Notes, p=False) -> None:

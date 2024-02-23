@@ -1,105 +1,23 @@
-import importlib.resources
 try:
-    importlib.resources.files("personal_assistant_bot")
-except:
-    from classes.record import Record
-    from classes.addressbook import AddressBook
-    from classes.notes import Notes
-    from classes.functions import make_menu, make_header
-    from classes.sort import sort
-    from classes.settings import filename, notes_filename
-else:
-    from personal_assistant_bot.classes.record import Record
-    from personal_assistant_bot.classes.addressbook import AddressBook
-    from personal_assistant_bot.classes.notes import Notes
-    from personal_assistant_bot.classes.functions import make_menu, make_header
-    from personal_assistant_bot.classes.sort import sort
-    from personal_assistant_bot.classes.settings import filename, notes_filename
+   from classes.record import Record
+   from classes.addressbook import AddressBook
+   from classes.notes import Notes
+   from functions.functions import make_menu
+   from functions.make_header import make_header
+   from functions.sort import sort
+   from settings.settings import addressbook_filename, notes_filename
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.record import Record
+   from personal_assistant_bot.classes.addressbook import AddressBook
+   from personal_assistant_bot.classes.notes import Notes
+   from personal_assistant_bot.functions.functions import make_menu
+   from personal_assistant_bot.functions.make_header import make_header
+   from personal_assistant_bot.functions.sort import sort
+   from personal_assistant_bot.settings.settings import addressbook_filename, notes_filename
+
 
 from colorama import init, Fore
 init(autoreset=True)
-
-def edit_record(book):
-
-    contact_name = input("\nPlease enter the name of the contact what you want to change: ")
-    find_record = book.find(contact_name)
-    if find_record is None:
-        print(Fore.RED + "\nContact name not found!")
-    else:
-        edit_record_menu = '''\nEdit Record menu:
-1. Edit Name
-2. Edit Phone
-3. Edit Birthday
-4. Edit Email
-5. Edit Address
-6. Save and Exit
-7. Exit'''
-        edit_swither = True
-        while  edit_swither:
-            print("")
-            print(find_record)
-            print(edit_record_menu)
-            choice = input("\nPlease input your choice: ")
-            if choice == '7':
-                break
-            elif choice == "1":
-                new_name = input("Please enter new Name: ")
-                print("")
-                find_record.edit_name(new_name)
-                if new_name != contact_name:
-                    book.add_record(find_record)
-                    book.delete(contact_name)
-            elif choice == "2":
-                while True:
-                    new_phone = input("Please enter new Phone: ")
-                    print("")
-                    try:
-                        find_record.add_phone(new_phone)
-                    except:
-                        pass
-                    else:
-                        break
-            elif choice == "3":
-                while True:
-                    new_birthday = input("Please enter new Birthday in format DD/MM/YYYY: ")
-                    print("")
-                    try:
-                        find_record.edit_birthday(new_birthday)
-                    except:
-                        pass
-                    else:
-                        break
-            elif choice == "4":
-                while True:
-                    new_email = input("Please enter new Email: ")
-                    print("")
-                    try:
-                        find_record.edit_email(new_email)
-                    except:
-                        pass
-                    else:
-                        break
-            elif choice == "5":
-                new_address = input("Please enter new Address: ")
-                print("")
-                find_record.edit_address(new_address) 
-            elif choice == "6":
-                book.write_contacts_to_file(filename)
-                print(Fore.GREEN + "\nChanges saved successful")
-                break
-
-def appruve_record(book, new_record):
-    print(new_record)
-    print('''\nWhat You will do with this record?
-1 - Save changes
-2 - Discard changes''')
-    choise = input()
-    if choise == "1":
-        book.write_contacts_to_file(filename)
-        print(Fore.GREEN + "Changes saved successful")
-    elif choise == "2":
-        book.delete(new_record)
-        print(Fore.GREEN + "Changes discard successful")
 
 
 def main():
@@ -144,7 +62,7 @@ Please, input your choice: '''
             while switcher:
 
                 book = AddressBook()
-                book = AddressBook.read_contacts_from_file(filename)
+                book = AddressBook.read_contacts_from_file(addressbook_filename)
                 record_menu = '''
 1. Show all Records
 2. Find Records
@@ -233,14 +151,14 @@ Please, input your choice: '''
                     book.add_record(new_record)
                     print(Fore.GREEN + "\nRecord added successful!\n")
 
-                    appruve_record(book, new_record)
+                    book.appruve_record(new_record)
 
                     input("\nPress Enter to continue...")
 
                 elif choice2 == "5":
                     make_header("EDIT RECORD")
                     
-                    edit_record(book)
+                    book.edit_record()
 
                     input("\nPress Enter to continue...")
 
@@ -256,7 +174,7 @@ Please, input your choice: '''
 
                 elif choice2 == "7":
                     make_header("SAVE ADDRESSBOOK")
-                    book.write_contacts_to_file(filename)
+                    book.write_contacts_to_file(addressbook_filename)
 
                     print(Fore.GREEN + "\nAddressBook saved successful!")
 

@@ -1,10 +1,17 @@
 from datetime import date
 
-from .name import Name
-from .birthday import Birthday
-from .phone import Phone
-from .email import Email
-from .address import Address
+try:
+   from classes.name import Name
+   from classes.birthday import Birthday
+   from classes.phone import Phone
+   from classes.email import Email
+   from classes.address import Address
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.name import Name
+   from personal_assistant_bot.classes.birthday import Birthday
+   from personal_assistant_bot.classes.phone import Phone
+   from personal_assistant_bot.classes.email import Email
+   from personal_assistant_bot.classes.address import Address
 
 from colorama import init, Fore
 init(autoreset=True)

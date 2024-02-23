@@ -2,8 +2,12 @@ from collections import UserDict
 from datetime import date, timedelta
 import pickle
 
-from .record import Record
-from .settings import filename, PAG
+try:
+   from classes.record import Record
+   from settings.settings import addressbook_filename, PAG
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.record import Record
+   from personal_assistant_bot.settings.settings import addressbook_filename, PAG
 
 from colorama import init, Fore
 init(autoreset=True)
@@ -26,7 +30,7 @@ class AddressBook(UserDict):
             for i in self:
                 if i == name:
                     self.data.pop(name)
-                    self.write_contacts_to_file(filename)
+                    self.write_contacts_to_file(addressbook_filename)
                     print(Fore.GREEN + f"Record '{name}' deleted successful!")
                     return True
         else:
@@ -138,23 +142,107 @@ class AddressBook(UserDict):
         jane_record3.add_address("00005, Kyiv, 100")
         book.add_record(jane_record3)
 
-        book.write_contacts_to_file(filename)
+        book.write_contacts_to_file(addressbook_filename)
 
         return book
     
 
-    def write_contacts_to_file(self, filename):
-        with open(filename, "wb") as fh:
+    def write_contacts_to_file(self, addressbook_filename):
+        with open(addressbook_filename, "wb") as fh:
             pickle.dump(self, fh)
     
     @classmethod
-    def read_contacts_from_file(cls, filename):
+    def read_contacts_from_file(cls, addressbook_filename):
         book = cls()
         try:
-            with open(filename, "rb") as fh:
+            with open(addressbook_filename, "rb") as fh:
                 book = pickle.load(fh)
             return book
         except:
             print(Fore.RED + "File with recors was deleted or was never created!")
             print(Fore.GREEN + "I created a file with a records for example!")
             return book.fill_AdressBook()
+    
+    def appruve_record(self, new_record):
+        print(new_record)
+        print('''\nWhat You will do with this record?
+1 - Save changes
+2 - Discard changes''')
+        choise = input()
+        if choise == "1":
+            self.write_contacts_to_file(addressbook_filename)
+            print(Fore.GREEN + "Changes saved successful")
+        elif choise == "2":
+            self.delete(new_record)
+            print(Fore.GREEN + "Changes discard successful")
+
+
+
+    def edit_record(self):
+
+        contact_name = input("\nPlease enter the name of the contact what you want to change: ")
+        find_record = self.find(contact_name)
+        if find_record is None:
+            print(Fore.RED + "\nContact name not found!")
+        else:
+            edit_record_menu = '''\nEdit Record menu:
+1. Edit Name
+2. Edit Phone
+3. Edit Birthday
+4. Edit Email
+5. Edit Address
+6. Save and Exit
+7. Exit'''
+            edit_swither = True
+            while  edit_swither:
+                print("")
+                print(find_record)
+                print(edit_record_menu)
+                choice = input("\nPlease input your choice: ")
+                if choice == '7':
+                    break
+                elif choice == "1":
+                    new_name = input("Please enter new Name: ")
+                    print("")
+                    find_record.edit_name(new_name)
+                    if new_name != contact_name:
+                        self.add_record(find_record)
+                        self.delete(contact_name)
+                elif choice == "2":
+                    while True:
+                        new_phone = input("Please enter new Phone: ")
+                        print("")
+                        try:
+                            find_record.add_phone(new_phone)
+                        except:
+                            pass
+                        else:
+                            break
+                elif choice == "3":
+                    while True:
+                        new_birthday = input("Please enter new Birthday in format DD/MM/YYYY: ")
+                        print("")
+                        try:
+                            find_record.edit_birthday(new_birthday)
+                        except:
+                            pass
+                        else:
+                            break
+                elif choice == "4":
+                    while True:
+                        new_email = input("Please enter new Email: ")
+                        print("")
+                        try:
+                            find_record.edit_email(new_email)
+                        except:
+                            pass
+                        else:
+                            break
+                elif choice == "5":
+                    new_address = input("Please enter new Address: ")
+                    print("")
+                    find_record.edit_address(new_address) 
+                elif choice == "6":
+                    self.write_contacts_to_file(addressbook_filename)
+                    print(Fore.GREEN + "\nChanges saved successful")
+                    break

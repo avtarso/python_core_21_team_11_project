@@ -1,4 +1,7 @@
-from .field import Field
+try:
+   from classes.field import Field
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.field import Field
 
 from colorama import init, Fore
 init(autoreset=True)

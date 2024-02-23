@@ -2,7 +2,10 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 
-from .note import Note
+try:
+   from classes.note import Note
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.note import Note
 
 class Notes(UserDict):
 
@@ -145,14 +148,14 @@ class Notes(UserDict):
 
         return False
 
-    def save_to_file(self, filename):
-        with open(filename, "wb") as file:
+    def save_to_file(self, notes_filename):
+        with open(notes_filename, "wb") as file:
             pickle.dump(self, file)
 
-    def load_from_file(self, filename):
+    def load_from_file(self, notes_filename):
 
         try:
-            with open(filename, "rb") as file:
+            with open(notes_filename, "rb") as file:
                 self = pickle.load(file)
              
         except:

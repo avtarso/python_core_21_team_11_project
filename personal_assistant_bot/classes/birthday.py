@@ -1,6 +1,9 @@
 from datetime import datetime
 
-from .field import Field
+import sys
+sys.path.append('..')
+
+from classes.field import Field
 
 from colorama import init, Fore
 init(autoreset=True)

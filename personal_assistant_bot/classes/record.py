@@ -1,10 +1,13 @@
 from datetime import date
 
-from .name import Name
-from .birthday import Birthday
-from .phone import Phone
-from .email import Email
-from .address import Address
+import sys
+sys.path.append('..')
+
+from classes.name import Name
+from classes.birthday import Birthday
+from classes.phone import Phone
+from classes.email import Email
+from classes.address import Address
 
 from colorama import init, Fore
 init(autoreset=True)

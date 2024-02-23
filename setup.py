@@ -1,8 +1,8 @@
 from setuptools import setup, find_namespace_packages
 
 setup(
-    name='personal-assistant_bot',
-    version='0.0.1',
+    name='personal-assistant-bot',
+    version='0.2.5',
     license='MIT License',
     url='https://github.com/avtarso/python_core_21_team_11_project/',
     author='Avtarso',

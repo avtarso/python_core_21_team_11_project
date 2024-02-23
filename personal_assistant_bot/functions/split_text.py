@@ -1,7 +1,7 @@
-import sys
-sys.path.append('..')
-
-from settings.settings import NOTE_LEN
+try:
+   from settings.settings import NOTE_LEN
+except ModuleNotFoundError:
+   from personal_assistant_bot.settings.settings import NOTE_LEN
 
 
 def split_text(text: str) -> list:

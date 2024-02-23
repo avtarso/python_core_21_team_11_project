@@ -2,10 +2,10 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 
-# import sys
-# sys.path.append('..')
-
-from classes.note import Note
+try:
+   from classes.note import Note
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.note import Note
 
 class Notes(UserDict):
 

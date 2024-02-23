@@ -1,11 +1,15 @@
-import sys
-sys.path.append('..')
-
-from classes.note import Note
-from classes.notes import Notes
-from settings.settings import PAG, notes_filename
-from functions.split_text import split_text
-from functions.make_header import make_header
+try:
+   from classes.note import Note
+   from classes.notes import Notes
+   from settings.settings import PAG, notes_filename
+   from functions.split_text import split_text
+   from functions.make_header import make_header
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.note import Note
+   from personal_assistant_bot.classes.notes import Notes
+   from personal_assistant_bot.settings.settings import PAG, notes_filename
+   from personal_assistant_bot.functions.split_text import split_text
+   from personal_assistant_bot.functions.make_header import make_header
 
 from colorama import Fore
 

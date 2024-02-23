@@ -1,10 +1,19 @@
-from classes.record import Record
-from classes.addressbook import AddressBook
-from classes.notes import Notes
-from functions.functions import make_menu
-from functions.make_header import make_header
-from functions.sort import sort
-from settings.settings import addressbook_filename, notes_filename
+try:
+   from classes.record import Record
+   from classes.addressbook import AddressBook
+   from classes.notes import Notes
+   from functions.functions import make_menu
+   from functions.make_header import make_header
+   from functions.sort import sort
+   from settings.settings import addressbook_filename, notes_filename
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.record import Record
+   from personal_assistant_bot.classes.addressbook import AddressBook
+   from personal_assistant_bot.classes.notes import Notes
+   from personal_assistant_bot.functions.functions import make_menu
+   from personal_assistant_bot.functions.make_header import make_header
+   from personal_assistant_bot.functions.sort import sort
+   from personal_assistant_bot.settings.settings import addressbook_filename, notes_filename
 
 
 from colorama import init, Fore

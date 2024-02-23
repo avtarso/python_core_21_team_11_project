@@ -2,11 +2,12 @@ from collections import UserDict
 from datetime import date, timedelta
 import pickle
 
-# import sys
-# sys.path.append('..')
-
-from classes.record import Record
-from settings.settings import addressbook_filename, PAG
+try:
+   from classes.record import Record
+   from settings.settings import addressbook_filename, PAG
+except ModuleNotFoundError:
+   from personal_assistant_bot.classes.record import Record
+   from personal_assistant_bot.settings.settings import addressbook_filename, PAG
 
 from colorama import init, Fore
 init(autoreset=True)
